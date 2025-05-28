@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,15 +31,35 @@ public class EmployeeService {
         return employeeMapper.toDto(employeeToSave);
     }
 
+    public EmployeeEntity findEmployeeEntityById(Long id) {
+        return employeeRepository.findById(id).orElseThrow();
+    }
+
     public EmployeeResponseDto findEmployeeById(Long id) {
         return employeeMapper.toDto(employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found")));
     }
 
-    public List<EmployeeResponseDto> findAllEmployees() {
+    public List<EmployeeResponseDto> findAllEmployeesAndConvertToDto() {
         return employeeRepository.findAll().stream().map(employeeMapper::toDto).collect(Collectors.toList());
     }
 
-    public EmployeeEntity findEmployeeEntityById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+    public List<EmployeeEntity> findAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+//    public EmployeeEntity findEmployeeEntityById(Long id) {
+//        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+//    }
+
+    public Optional<EmployeeEntity> findByPhoneNumber(String phoneNumber) {
+        return employeeRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    public EmployeeEntity findByPhoneNumberAndPassword(String phoneNumber, String password) {
+        return employeeRepository.findByPhoneNumberAndPasswordHash(phoneNumber, password).orElseThrow();
+    }
+
+    public Optional<EmployeeEntity> getCurrentEmployee() {
+        return null;
     }
 }

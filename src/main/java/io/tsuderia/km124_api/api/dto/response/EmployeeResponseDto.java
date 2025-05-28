@@ -10,6 +10,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class EmployeeResponseDto {
+    private Long id;
     private String fullName;
     private String phoneNumber;
     private String roleName;

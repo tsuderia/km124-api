@@ -1,6 +1,7 @@
 package io.tsuderia.km124_api.api.controller;
 
 import io.tsuderia.km124_api.api.dto.request.DocumentRequestDto;
+import io.tsuderia.km124_api.api.dto.request.DocumentWithBuyoutDto;
 import io.tsuderia.km124_api.api.service.DocumentService;
 import io.tsuderia.km124_api.data.entity.DocumentEntity;
 import lombok.AllArgsConstructor;
@@ -21,14 +22,14 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentEntity> findDocumentById(Long id) {
+    public ResponseEntity<DocumentEntity> findDocumentById(@PathVariable Long id) {
         return ResponseEntity.ok(documentService.findDocumentById(id));
     }
 
-//    @PostMapping
-//    public ResponseEntity<DocumentEntity> createDocument(@RequestBody DocumentEntity document) {
-//        return ResponseEntity.ok(documentService.createDocument(document));
-//    }
+    @GetMapping("/document-with-buyouts")
+    public ResponseEntity<List<DocumentWithBuyoutDto>> getAllDocumentsWithBuyouts() {
+        return ResponseEntity.ok(documentService.getAllDocumentsWithBuyouts());
+    }
 
     @PostMapping
     public ResponseEntity<DocumentEntity> createDocument(@RequestBody DocumentRequestDto dto) {
@@ -36,6 +37,19 @@ public class DocumentController {
         return ResponseEntity.ok(created);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<DocumentEntity>> searchDocuments(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String query
+    ) {
+        return ResponseEntity.ok(documentService.searchDocuments(query));
+    }
 
-    // TODO: update, delete
+    @PutMapping("/{id}")
+    public ResponseEntity<DocumentEntity> updateDocumentById(@RequestBody DocumentRequestDto dto, @PathVariable Long id) {
+        return ResponseEntity.ok(documentService.updateDocumentById(dto, id));
+    }
+
+
+    // TODO: delete
 }

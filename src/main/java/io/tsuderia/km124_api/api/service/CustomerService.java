@@ -40,4 +40,8 @@ public class CustomerService {
     public void deleteCustomerById(Long id) {
         customerRepository.deleteById(id);
     }
+
+    public List<CustomerEntity> searchCustomer(String query) {
+        return customerRepository.findByFullNameContainingIgnoreCase(query);
+    }
 }

@@ -35,4 +35,9 @@ public class CustomerController {
     public void deleteCustomerById(@PathVariable Long id) {
         customerService.deleteCustomerById(id);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerEntity>> search(@RequestParam String query) {
+        return ResponseEntity.ok(customerService.searchCustomer(query));
+    }
 }

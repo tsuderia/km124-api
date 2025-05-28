@@ -37,6 +37,10 @@ public class DocumentEntity {
     @JoinColumn(name = "gold_purity_id")
     private GoldPurityEntity goldPurity;
 
+    @ManyToOne
+    @JoinColumn(name = "interest_rate_id")
+    private InterestRateEntity interestRate;
+
     private List<String> items = new ArrayList<>();
 
     private float weight;
@@ -44,8 +48,14 @@ public class DocumentEntity {
     private float evaluation;
     private float amount;
 
+    @Column(name = "commission_fee")
+    private float commissionFee;
+
     @Column(name = "date_of_termination")
     private LocalDate dateOfTermination = LocalDate.now().plusDays(60);
+
+    private Boolean status;
+    private Boolean isBuyOut;
 
     @Column(name = "created_at")
     private LocalDate createdAt = LocalDate.now();
